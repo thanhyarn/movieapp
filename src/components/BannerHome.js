@@ -1,24 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const BannerHome = () => {
   const bannerData = useSelector((state) => state.movieData.bannerData);
   const imageURL = useSelector((state) => state.movieData.imageURL);
-  const handleNext = () => {
 
-  }
+  const [currentImage, setCurrentImage] = useState(0);
+  const handleNext = () => {
+    if (currentImage < bannerData.length - 1) {
+      setCurrentImage((preve) => preve + 1);
+    }
+  };
 
   const handlePrevious = () => {
+    if (currentImage > 0) {
+      setCurrentImage((preve) => preve - 1);
+    }
+  };
 
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (currentImage < bannerData.length - 1) {
+        handleNext();
+      } else {
+        setCurrentImage(0);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [bannerData, imageURL]);
 
   return (
     <section className="w-full h-full">
       <div className="flex min-h-full max-h-[92vh] overflow-hidden relative group">
         {bannerData.map((data, index) => {
           return (
-            <div className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group" style={{transform: `translateX(-${currentImage * 100}%)`}}>
+            <div
+              className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-all"
+              style={{ transform: `translateX(-${currentImage * 100}%)` }}
+            >
               <div className="w-full h-full" key={index}>
                 <img
                   className="h-full w-full object-cover"
@@ -28,10 +48,16 @@ const BannerHome = () => {
 
               {/*** button next and previous image */}
               <div className="absolute top-0 w-full h-full hidden items-center justify-between px-4 group-hover:flex">
-                <button onClick={handlePrevious} className="bg-white p-1 rounded-full text-xl z-10 text-black">
+                <button
+                  onClick={handlePrevious}
+                  className="bg-white p-1 rounded-full text-xl z-10 text-black"
+                >
                   <FaAngleLeft />
                 </button>
-                <button onClick={handleNext} className="bg-white p-1 rounded-full text-xl z-10 text-black">
+                <button
+                  onClick={handleNext}
+                  className="bg-white p-1 rounded-full text-xl z-10 text-black"
+                >
                   <FaAngleRight />
                 </button>
               </div>
@@ -40,7 +66,7 @@ const BannerHome = () => {
               <div className="container mx-auto">
                 <div className="absolute bottom-0 max-w-md px-3">
                   <h2 className="font-bold text-2xl lg:text-4xl text-white drop-shadow-2xl">
-                    {data.title}
+                    {data.title || data.name}
                   </h2>
                   <p className="text-ellipsis line-champ-3 my-2">
                     {data.overview}
