@@ -35,7 +35,7 @@ const BannerHome = () => {
       <div className="flex min-h-full max-h-[92vh] overflow-hidden relative group">
         {bannerData.map((data, index) => {
           return (
-            <div
+            <div key={data.id+"bannerHome"+index}
               className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-all"
               style={{ transform: `translateX(-${currentImage * 100}%)` }}
             >
