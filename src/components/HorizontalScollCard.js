@@ -2,6 +2,7 @@ import React from "react";
 import Card from "./Card";
 import { useRef } from "react";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
+import "../App.css";
 const HorizontalScollCard = ({ data = [], heading }) => {
   const containerRef = useRef();
 
@@ -17,10 +18,10 @@ const HorizontalScollCard = ({ data = [], heading }) => {
       <h2 className="text-xl lg:text-2xl font-bold mb-3 text-white">
         {heading}
       </h2>
-      <div className="overflow-hidden relative">
+      <div className="relative">
         <div
           ref={containerRef}
-          className="grid grid-cols-[repeat(auto-fit,230px)] grid-flow-col gap-6 overflow-x-scroll relative z-10 scroll-smooth transition-all"
+          className="grid grid-cols-[repeat(auto-fit,230px)] grid-flow-col gap-6 overflow-x-scroll relative z-10 scroll-smooth transition-all scrollbar-none"
         >
           {" "}
           {/* Sử dụng grid-cols-4 để hiển thị 4 Card trên mỗi dòng */}
@@ -34,7 +35,7 @@ const HorizontalScollCard = ({ data = [], heading }) => {
           ))}
         </div>
 
-        <div className="absolute top-0 flex justify-between w-full h-full items-center">
+        <div className="absolute top-0  flex justify-between w-full h-full items-center">
           <button
             onClick={handlePrevious}
             className="bg-white p-3 text-black rounded-full -ml-2 z-10"
